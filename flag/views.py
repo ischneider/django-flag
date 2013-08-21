@@ -18,6 +18,7 @@ def flag(request):
     creator_field = request.POST.get("creator_field")
     comment = request.POST.get("comment")
     next = request.POST.get("next")
+    flag_type = request.POST.get("flag_type", None)
     
     content_type = get_object_or_404(ContentType, id = int(content_type))
     object_id = int(object_id)
@@ -29,7 +30,7 @@ def flag(request):
     else:
         creator = None
     
-    add_flag(request.user, content_type, object_id, creator, comment)
+    add_flag(request.user, content_type, object_id, creator, comment, flag_type=flag_type)
     messages.success(request, _("You have added a flag. A moderator will review your submission shortly."), fail_silently=True)
     
     if next:
